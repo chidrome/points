@@ -33,18 +33,15 @@ class App extends Component {
     let token = localStorage.getItem('serverToken')
     // IF THERE IS, TRY TO GET USER INFO
     if(token){
-      console.log('Found token in LS', token);
       axios.post(`${SERVER_URL}/auth/current/user`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(response => {
-        console.log('SUCCESS!!!', response);
         this.setState({
           user: response.data.user,
           mileage_program: response.data.mileage_program,
           balance: response.data.balance
         });
-        console.log('THIS IS THE MOTHERFUCKING USER', this.state.user)
       })
       .catch(error => {
         console.log('ERROR looking up user by token', error, error.response)
@@ -52,7 +49,6 @@ class App extends Component {
       })
     }
     else {
-      console.log('No token in LS');
       this.setState({ user: null })
     }
   }
