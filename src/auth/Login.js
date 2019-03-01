@@ -24,7 +24,7 @@ class Login extends Component {
     .then(response => {
       console.log('SUCCESS!', response);
       localStorage.setItem('serverToken', response.data.token);
-      this.props.updateUser();
+      this.props.updateUser()
     })
     .catch(error => {
       console.log('ERROR LOGGING IN', error)// TODO: make error messages for the user to see
@@ -43,7 +43,7 @@ class Login extends Component {
               <input name="Email" placeholder="What is your email?" value={this.state.email} onChange={this.handleEmailChange} />
             </div>
             <div>
-              <input name="Password" type="password" value={this.state.password} onChange={this.handlePasswordChange} />
+              <input name="Password" type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} />
             </div>
             <input type="submit" value="Log Me In!" className="button" />
           </form>

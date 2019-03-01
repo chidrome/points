@@ -21,8 +21,8 @@ class Signup extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('In submit fnc, stat is', this.state);
-    // TODO: SEND DATA TO SERVER
+    console.log('In submit fnc, state is', this.state);
+    // SEND DATA TO SERVER
     axios.post(`${SERVER_URL}/auth/signup`, this.state)
     .then(response => {
       console.log('SUCCESS SIGNING UP!!', response);
@@ -52,7 +52,7 @@ class Signup extends Component {
               <input name="Email" placeholder="What is your email?" value={this.state.email} onChange={this.handleEmailChange} />
             </div>
             <div>
-              <input name="Password" type="password" value={this.state.password} onChange={this.handlePasswordChange} />
+              <input name="Password" type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange} />
             </div>
             <input type="submit" value="Sign Me Up!" className="button" />
           </form>

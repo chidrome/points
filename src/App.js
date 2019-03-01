@@ -8,13 +8,17 @@ import Home from './Home';
 import Login from './auth/Login';
 import Nav from './layout/Nav';
 import Profile from './Profile';
+import ProfileEdit from './ProfileEdit';
 import Signup from './auth/Signup';
+import Recommend from './Recommend';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      user: null
+      user: null,
+      mileage_program: '',
+      balance: 0
     }
   }
 
@@ -23,8 +27,9 @@ class App extends Component {
     this.getUser();
   }
 
+
   getUser = () => {
-    // TODO: SEE IF THERE'S A TOKEN
+    // SEE IF THERE'S A TOKEN
     let token = localStorage.getItem('serverToken')
     // IF THERE IS, TRY TO GET USER INFO
     if(token){
@@ -33,10 +38,13 @@ class App extends Component {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(response => {
-        console.log('SUCCESS!!!');
+        console.log('SUCCESS!!!', response);
         this.setState({
-          user: response.data.user
+          user: response.data.user,
+          mileage_program: response.data.mileage_program,
+          balance: response.data.balance
         });
+        console.log('THIS IS THE MOTHERFUCKING USER', this.state.user)
       })
       .catch(error => {
         console.log('ERROR looking up user by token', error, error.response)
@@ -63,7 +71,13 @@ class App extends Component {
               () => (<Signup user={this.state.user} updateUser={this.getUser} />)
             } />
             <Route path="/profile" component={
-              () => (<Profile user={this.state.user} updateUser={this.getUser} />)
+              () => (<Profile user={this.state.user} updateUser={this.getUser} mileage_program={this.state.mileage_program} balance={this.state.balance} />)
+            } />
+            <Route path="/points/add" component={
+              () => (<ProfileEdit user={this.state.user} updateUser={this.getUser} mileage_program={this.state.mileage_program} balance={this.state.balance} updateBalance={this.updateBalance} />)
+            } />
+            <Route path="/recommend" component={
+              () => (<Recommend user={this.state.user} updateUser={this.getUser} mileage_program={this.state.mileage_program} balance={this.state.balance} />)
             } />
           </div>
         </Router>
